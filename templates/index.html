@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="static/css/resetcss.css">
+  <link rel="stylesheet" type="text/css" href="static/css/play.css">
+  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <style>
+    .driveBtn {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body style="background: #333;color:#fff;">
+  <div class="screenwarp">
+    <div class="controlwarp">
+      <div class="controlbtnup btn driveBtn"></div>
+      <div class="controlbtnright btn driveBtn"></div>
+      <div class="controlbtndown btn driveBtn"></div>
+      <div class="controlbtnleft btn driveBtn"></div>
+    </div>
+    <div class="functionwarp">
+      <div class="functiontop">
+        <div class="functiontop-left">
+          <div class="cruise-off"></div><p>寻迹</p>
+        </div>
+        <div class="functiontop-right">
+          <div class="light-off"></div><p class="light-text">开灯</p>
+        </div>
+      </div>
+      <div class="functionmiddle">
+        <div class="camera-up btnsmall"></div>
+        <div class="camera-right btnsmall"></div>
+        <div class="camera-down btnsmall"></div>
+        <div class="camera-left btnsmall"></div>
+        <div class="camera-middle"><div class="camera-on"></div></div>
+      </div>
+      <div class="functionbottom">
+        <div class="voice-left btnsmall"></div>
+        <div class="voice-right btnsmall"></div>
+        <div class="voice-middle"><div class="voice-on"></div><p class="voice-text">超声波</p></div>
+      </div>
+    </div>
+  </div>
+   <script>
+/*
+
+    $(".cruise-off").click(function(){
+      $(".cruise-off").toggleClass("cruise-on");
+    });
+
+    $(".camera-off").click(function(){
+      $(".camera-off").toggleClass("camera-on");
+    });
+    $(".voice-off").click(function(){
+      $(".voice-off").toggleClass("voice-on");
+    });*/
+
+
+
+    $(document).ready(function(){
+
+        resize();
+        window.addEventListener("resize", resize)
+        // 点击添加波纹
+        var wave = '<div class="wave-circle"></div>';
+        $('.btn').click(function (){
+            $(this).siblings('.btn').empty();
+            $(this).empty().append(wave);
+        });
+        var wavesmall = '<div class="wave-circlesmall"></div>';
+        $('.btnsmall').click(function (){
+            $(this).siblings('.btnsmall').empty();
+            $(this).empty().append(wavesmall);
+        });
+        // 驾驶
+        $('.controlbtnup').on('touchstart', function(){
+            action('drive/forward');
+        });
+        $('.controlbtndown').on('touchstart', function(){
+            action('drive/backOff');
+        });
+        $('.controlbtnleft').on('touchstart', function(){
+            action('drive/leftTurn');
+        });
+        $('.controlbtnright').on('touchstart', function(){
+            action('drive/rightTurn');
+        });
+        $('.driveBtn').on('touchend', function(){
+            action('drive/stop');
+        });
+        // 超声波云台
+        $('.voice-left').click(function(){
+            action('servoUltrasonic/leftTurn');
+        });
+        $('.voice-right').click(function(){
+            action('servoUltrasonic/rightTurn');
+        });
+        // 摄像头云台
+        $('.camera-up').click(function(){
+            action('servoCamera/upTurn');
+        });
+        $('.camera-down').click(function(){
+            action('servoCamera/downTurn');
+        });
+        $('.camera-left').click(function(){
+            action('servoCamera/leftTurn');
+        });
+        $('.camera-right').click(function(){
+            action('servoCamera/rightTurn');
+        });
+        // 灯
+        $(".light-off").toggle(function(){
+            $(".light-off").addClass("light-on");
+            $(".light-text").html("关灯");
+            action('light/turnOn');
+        },function(){
+            $(".light-off").removeClass("light-on");
+            $(".light-text").html("开灯");
+            action('light/turnOff');
+        });
+    });
+
+    function action(url){
+        $.ajax({
+            type: 'get',
+            url: url,
+            //data: {type:'turnOn'},
+            success: function (data) {
+                console.log(data.success);
+            }
+        })
+    }
+
+    function resize() {
+        var body = document.getElementsByTagName('body')[0];
+        var html = document.getElementsByTagName('html')[0];
+        var width = html.clientWidth;
+        var height =  html.clientHeight;
+        var max = width > height ? width : height;
+        var min = width > height ? height : width;
+        body.style.width = max + "px";
+        body.style.height = min + "px";
+    }
+  </script>
+</body>
+</html>

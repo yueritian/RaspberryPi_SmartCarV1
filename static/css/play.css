@@ -1,0 +1,481 @@
+
+    @media screen and (orientation:portrait) {
+      /*竖屏样式*/
+      body {
+        transform-origin: 0 0;
+        transform: rotateZ(90deg) translateY(-100%);
+      }
+    }
+    .screenwarp{
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    /*左侧按钮区*/
+    .controlwarp{
+      position: absolute;
+      left:10px;
+      bottom: 10px;
+      width: 120px;
+      height: 120px;
+    }
+    /*上*/
+    .controlbtnup {
+      position: absolute;
+      left: 40px;
+      height:40px;
+      width: 40px;
+      background-image: url('../images/Arrow Up@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .controlbtnup {
+        background-image: url('../images/Arrow Up@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .controlbtnup {
+        background-image: url('../images/Arrow Up@3x.png');
+        background-size: cover;
+      }
+    }
+    /*右*/
+    .controlbtnright {
+      position: absolute;
+      left: 80px;
+      top: 40px;
+      height:40px;
+      width: 40px;
+      background-image: url('../images/Arrow Right@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .controlbtnright {
+        background-image: url('../images/Arrow Right@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .controlbtnright {
+        background-image: url('../images/Arrow Right@3x.png');
+        background-size: cover;
+      }
+    }
+    /*下*/
+    .controlbtndown {
+      position: absolute;
+      left: 40px;
+      top: 80px;
+      height:40px;
+      width: 40px;
+      background-image: url('../images/Arrow Down@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .controlbtndown {
+        background-image: url('../images/Arrow Down@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .controlbtndown {
+        background-image: url('../images/Arrow Down@3x.png');
+        background-size: cover;
+      }
+    }
+    /*左*/
+    .controlbtnleft {
+      position: absolute;
+      top: 40px;
+      height:40px;
+      width: 40px;
+      background-image: url('../images/Arrow Left@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .controlbtnleft {
+        background-image: url('../images/Arrow Left@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .controlbtnleft {
+        background-image: url('../images/Arrow Left@3x.png');
+        background-size: cover;
+      }
+    }
+    /*右侧功能区*/
+    .functionwarp{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      bottom: 10px;
+      font-size: 14px;
+      line-height: 26px;
+      letter-spacing: 2px
+    }
+    .functiontop{
+      width: 120px;
+      text-align:center;
+      height: 60px;
+      float: right;
+    }
+    .functiontop-left{
+      display: inline-block;
+      width: 36px;
+      margin:0 7px;
+    }
+    /*巡航*/
+    .cruise-off {
+      height:36px;
+      width: 36px;
+      background-image: url('../images/cruise-off@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .cruise-off {
+        background-image: url('../images/cruise-off@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .cruise-off {
+        background-image: url('../images/cruise-off@3x.png');
+        background-size: cover;
+      }
+    }
+
+    .cruise-on {
+      height:36px;
+      width: 36px;
+      background-image: url('../images/cruise-on@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .cruise {
+        background-image: url('../images/cruise-on@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .cruise {
+        background-image: url('../images/cruise-on@3x.png');
+        background-size: cover;
+      }
+    }
+    .functiontop-right{
+      display: inline-block;
+      width: 36px;
+      margin:0 7px;
+    }
+    /*开灯*/
+    .light-off {
+      height:36px;
+      width: 36px;
+      background-image: url('../images/light-off@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .light-off {
+        background-image: url('../images/light-off@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .light-off {
+        background-image: url('../images/light-off@3x.png');
+        background-size: cover;
+      }
+    }
+    .light-on {
+      height:36px;
+      width: 36px;
+      background-image: url('../images/light-on@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .light-on {
+        background-image: url('../images/light-on@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .light-on {
+        background-image: url('../images/light-on@3x.png');
+        background-size: cover;
+      }
+    }
+    /*中间摄像头*/
+    .functionmiddle{
+      width: 140px;
+      text-align:center;
+      position: relative;
+      height: 150px;
+      margin-top: 80px
+    }
+
+    .camera-middle{
+      display: inline-block;
+      position: absolute;
+      left: 40px;
+      top: 35px;
+    }
+    .camera-text{
+      line-height: 20px;
+      padding:0;
+    }
+
+    .camera-off {
+      height:60px;
+      width: 60px;
+      background-image: url('../images/camera-off@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .camera-off {
+        background-image: url('../images/camera-off@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .camera-off {
+        background-image: url('../images/camera-off@3x.png');
+        background-size: cover;
+      }
+    }
+
+    .camera-on {
+      height:60px;
+      width: 60px;
+      background-image: url('../images/camera-on@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .camera-on {
+        background-image: url('../images/camera-on@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .camera-on {
+        background-image: url('../images/camera-on@3x.png');
+        background-size: cover;
+      }
+    }
+
+    .camera-up {
+      position: absolute;
+      left: 55px;
+      height:30px;
+      width: 30px;
+      background-image: url('../images/sup@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .camera-up {
+        background-image: url('../images/sup@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .camera-up {
+        background-image: url('../images/sup@3x.png');
+        background-size: cover;
+      }
+    }
+
+    .camera-right {
+      position: absolute;
+      left: 110px;
+      top: 50px;
+      height:30px;
+      width: 30px;
+      background-image: url('../images/sright@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .camera-right {
+        background-image: url('../images/sright@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .camera-right {
+        background-image: url('../images/sright@3x.png');
+        background-size: cover;
+      }
+    }
+
+    .camera-down {
+      position: absolute;
+      left: 55px;
+      top: 100px;
+      height:30px;
+      width: 30px;
+      background-image: url('../images/sdown@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .camera-down {
+        background-image: url('../images/sdown@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .camera-down {
+        background-image: url('../images/sdown@3x.png');
+        background-size: cover;
+      }
+    }
+
+    .camera-left {
+      position: absolute;
+      top: 50px;
+      height:30px;
+      width: 30px;
+      background-image: url('../images/sleft@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .camera-left {
+        background-image: url('../images/sleft@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .camera-left {
+        background-image: url('../images/sleft@3x.png');
+        background-size: cover;
+      }
+    }
+    /*下方超声波*/
+    .functionbottom{
+      width: 140px;
+      text-align:center;
+      height: 80px;
+      position: absolute;
+      bottom: 0;
+    }
+    .voice-middle{
+      display: inline-block;
+      position: absolute;
+      left: 40px;
+    }
+    .voice-text{
+      padding:0;
+    }
+    .voice-off {
+      height:60px;
+      width: 60px;
+      background-image: url('../images/voice-off@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .voice-off {
+        background-image: url('../images/voice-off@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .voice-off {
+        background-image: url('../images/voice-off@3x.png');
+        background-size: cover;
+      }
+    }
+    .voice-on {
+      height:60px;
+      width: 60px;
+      background-image: url('../images/voice-on@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .voice-on {
+        background-image: url('../images/voice-on@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .voice-on {
+        background-image: url('../images/voice-on@3x.png');
+        background-size: cover;
+      }
+    }
+    .voice-left {
+      background-image: url('../images/sleft@2x.png');
+      position: absolute;
+      top: 15px;
+      height:30px;
+      width: 30px;
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .voice-left {
+        background-image: url('../images/sleft@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .voice-left {
+        background-image: url('../images/sleft@3x.png');
+        background-size: cover;
+      }
+    }
+    .voice-right {
+      background-image: url('../images/sright@2x.png');
+      position: absolute;
+      left: 110px;
+      top: 15px;
+      height:30px;
+      width: 30px;
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .voice-right {
+        background-image: url('../images/sright@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .voice-right {
+        background-image: url('../images/sright@3x.png');
+        background-size: cover;
+      }
+    }
+
+    .wave-circle:first-child {
+      animation: circle-opacity 1s linear;
+      animation-iteration-count:1;
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      border-radius: 50%;
+      left: -10px;
+      top: -10px;
+      }
+      @keyframes circle-opacity{
+        0% {
+          opacity: 1;
+          transform: scale(0);
+        }
+        95% {
+          opacity: 0;
+          transform: scale(1);
+          background: #fff;
+        }
+        100%{
+          opacity: 1;
+          transform: scale(0);
+        }
+      }
+
+      .wave-circlesmall:first-child {
+      animation: circle-opacity 1s linear;
+      animation-iteration-count:1;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      border-radius: 50%;
+      left: -5px;
+      top: -5px;
+      }
