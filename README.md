@@ -1,5 +1,8 @@
 # RaspberryPi_SmartCarV1
 基于树莓派制作智能小车（H5页面操作移动+实时显示摄像头内容+各类传感器）
+
+![Car-Pic01](https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/Car.jpeg)
+
 ## 软件环境
 > * 烧录系统：RASPBIAN STRETCH LITE 2018-04-18 （需要进行一系列配置，如开启SSH、摄像头、中文设置、更改源等）
 > * 直播相关：Nginx 1.14 + RTMP Module + Gstreamer1.0 + StrobeMediaPlayback
