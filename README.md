@@ -1,7 +1,7 @@
 # RaspberryPi_SmartCarV1
 基于树莓派制作智能小车（H5页面操作移动+实时显示摄像头内容+各类传感器）
 
-![Car-Pic01](https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/Car.jpeg)
+<img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/Car.jpeg" width="600" alt="小车初步定型照"/>
 
 ## 软件环境
 > * 烧录系统：RASPBIAN STRETCH LITE 2018-04-18 （需要进行一系列配置，如开启SSH、摄像头、中文设置、更改源等）
@@ -19,7 +19,7 @@
 > * 超声波传感器
 > * 摄像头500w像素（树莓派3代）
 > * 舵机（sg90） * 3
-> * LCD1602 + i2c接口
+> * LCD1602（5v） + i2c接口
 > * 无源蜂鸣器（5v，低电平触发）
 > * 光敏传感器
 > * RGB七彩灯
