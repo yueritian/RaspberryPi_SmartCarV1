@@ -23,10 +23,12 @@
 # 其他：17
 
 import threading
+import os
 
 from PyCode.Modules.RGBLightModule import *
 from PyCode.Modules.ServoModule import *
 from PyCode.Modules.WheelModule import *
+from PyCode.Modules.LCDModule import *
 from PyCode.Sensors.BeeSensor import *
 from PyCode.Sensors.InfraredSensor import *
 from PyCode.Sensors.LightSensor import *
@@ -38,23 +40,27 @@ class QQCar:
 
     def __init__(self):
         # 初始化智能小车使用控制脚--------------
-        self.PIN_LIGHT = 18             # 01：光敏
+        self.PIN_LIGHT = 8              # 01：光敏
         self.PIN_ULTRASON_TRIG = 11     # 02：超声波-发射
         self.PIN_ULTRASON_ECHO = 13     # 03：超声波-接收
-        self.PIN_INFRARED_L = 7         # 04：左避障
-        self.PIN_INFRARED_R = 25        # 05：右避障
+        self.PIN_INFRARED_L = 37        # 04：左避障
+        self.PIN_INFRARED_R = 7         # 05：右避障
         self.PIN_BEE = 26               # 06：蜂鸣
-        self.PIN_TRACE = 15             # 07：寻迹
-        self.PIN_LIGHT_R = 19           # 08：大灯
-        self.PIN_LIGHT_G = 21           # 09：大灯
-        self.PIN_LIGHT_B = 23           # 10：大灯
-        self.PIN_SERVO_U = 29           # 11：超声波云台
-        self.PIN_SERVO_CH = 31          # 12：摄像头水平云台
-        self.PIN_SERVO_CV = 33          # 13：摄像头垂直云台
+        self.PIN_TRACE = 35             # 07：寻迹
+        self.PIN_LIGHT_R = 29           # 08：大灯
+        self.PIN_LIGHT_G = 31           # 09：大灯
+        self.PIN_LIGHT_B = 33           # 10：大灯
+        self.PIN_SERVO_U = 23           # 11：超声波云台
+        self.PIN_SERVO_CH = 19          # 12：摄像头水平云台
+        self.PIN_SERVO_CV = 21          # 13：摄像头垂直云台
         self.WHEEL_L_IN1 = 32           # 14：左轮
         self.WHEEL_L_IN2 = 36           # 15：左轮
         self.WHEEL_R_IN1 = 40           # 16：右轮
         self.WHEEL_R_IN2 = 38           # 17：右轮
+        self.LCD_SDA = 3                # 18：液晶屏
+        self.LCD_SCL = 5                # 19：液晶屏
+        # 小车状态
+        self.status = 'normal'
         # 初始化树莓派gpio控制脚----------------
         # 大灯
         self.rgbLightModule = RGBLightModule(self.PIN_LIGHT_R, self.PIN_LIGHT_G, self.PIN_LIGHT_B)
@@ -78,28 +84,47 @@ class QQCar:
         self.traceSensor = TraceSensor(self.PIN_TRACE)
         # 超声波
         self.ultrasonicSensor = UltrasonicSensor(self.PIN_ULTRASON_TRIG, self.PIN_ULTRASON_ECHO)
-        # -------------------------------------
+        # LCD，此处的bus和addr请根据实际地址调整
+        self.screen = Screen(bus=1, addr=0x3f, cols=16, rows=2)
+        screen.enable_backlight()
+
         # 启动传感器
         threading.Thread(target=self.start, args=(self,))
+        # 启动液晶
+        threading.Thread(target=self.lcd, args=(self,))
 
     # 启动传感器
     def start(self):
         while True:
             # 红外检测障碍物
             if self.infraredSensor_L.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK or self.infraredSensor_R.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK:
+                self.status = 'warning'
                 self.beeSensor.play()
             # 超声波检测障碍物
             if self.ultrasonicSensor.getDistance() <= 0.3:
+                self.status = 'warning'
                 self.beeSensor.play()
             # 寻迹
-            #if self.traceSensor.getStatus() == TraceSensor.TRACE_SENSOR_ONWAY:
-            #    self.beeSensor.play(0.5)
+            if self.traceSensor.getStatus() == TraceSensor.TRACE_SENSOR_ONWAY:
+                self.beeSensor.play(0.5)
             # 检测光亮
             if self.lightSensor.getStatus() == LightSensor.LIGHT_SENSOR_DARK:
                 self.rgbLightModule.turnOn()
             else:
                 self.rgbLightModule.turnOff()
             time.sleep(1)
+
+    # 设置液晶屏
+    def lcd(self):
+        while True:
+            if self.status == 'normal':
+                screen.display_data(time.strftime("%Y-%m-%d %H:%M"), 'CPU:' + self.getCPUtemperature() + 'C')
+                time.sleep(1)
+            else:
+                screen.display_data('-----Waring-----', '   Look Out!')
+                for n in range(5):
+                    self.lcd.warning()
+                self.status = 'normal'
 
     # 前进的代码
     def forward(self):
@@ -152,3 +177,8 @@ class QQCar:
     # 关灯
     def turnOffLight(self):
         self.rgbLightModule.turnOff()
+
+    # 获取cpu温度
+    def getCPUtemperature(self):
+        res = os.popen('vcgencmd measure_temp').readline()
+        return (res.replace("temp=", "").replace("'C\n", ""))

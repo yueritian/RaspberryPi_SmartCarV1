@@ -26,9 +26,22 @@ class ServoModule:
     def turnLeft(self):
         self.pwm.ChangeDutyCycle(2.5)
         time.sleep(0.02)
+        self.pwm.ChangeDutyCycle(0)
 
     # 右转
     def turnRight(self):
         self.pwm.ChangeDutyCycle(12.5)
         time.sleep(0.02)
+        self.pwm.ChangeDutyCycle(0)
 
+
+if __name__ == "__main__":
+    try:
+        # 19,21,23
+        m = ServoModule(19)
+        m.turnLeft()
+        time.sleep(5)
+        m.turnRight()
+    except KeyboardInterrupt:
+        pass
+    GPIO.cleanup()

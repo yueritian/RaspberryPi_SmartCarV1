@@ -26,3 +26,13 @@ class InfraredSensor:
     # 1 无障碍福
     def getStatus(self):
         return GPIO.input(self.PIN)
+
+
+if __name__ == "__main__":
+    try:
+        # 37,27
+        m = InfraredSensor(37)
+        print(m.getStatus())
+    except KeyboardInterrupt:
+        pass
+    GPIO.cleanup()

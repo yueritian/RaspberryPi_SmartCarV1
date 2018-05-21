@@ -24,3 +24,12 @@ class BeeSensor:
             time.sleep(sleepTime)
             GPIO.output(self.PIN, GPIO.HIGH)
             time.sleep(sleepTime)
+
+
+if __name__ == "__main__":
+    try:
+        m = BeeSensor(26)
+        m.play()
+    except KeyboardInterrupt:
+        pass
+    GPIO.cleanup()

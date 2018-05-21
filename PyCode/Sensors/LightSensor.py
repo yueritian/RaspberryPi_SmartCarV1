@@ -26,3 +26,12 @@ class LightSensor:
     # 1 身处黑暗
     def getStatus(self):
         return GPIO.input(self.PIN)
+
+
+if __name__ == "__main__":
+    try:
+        m = LightSensor(8)
+        print(m.getStatus())
+    except KeyboardInterrupt:
+        pass
+    GPIO.cleanup()

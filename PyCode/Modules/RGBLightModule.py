@@ -33,11 +33,23 @@ class RGBLightModule:
     # 开灯
     def turnOn(self):
         self.pwmR.ChangeDutyCycle(0)
-        self.pwmG.ChangeDutyCycle(0)
+        self.pwmG.ChangeDutyCycle(100)
         self.pwmB.ChangeDutyCycle(100)
+
 
     # 关灯
     def turnOff(self):
         self.pwmR.stop()
         self.pwmG.stop()
         self.pwmB.stop()
+
+
+if __name__ == "__main__":
+    try:
+        m = RGBLightModule(29, 31, 33)
+        m.turnOn()
+        time.sleep(5)
+        m.turnOff()
+    except KeyboardInterrupt:
+        pass
+    GPIO.cleanup()

@@ -11,8 +11,8 @@ import time
 
 class TraceSensor:
     # 静态变量
-    TRACE_SENSOR_ONWAY = 0
-    TRACE_SENSOR_OUTWAY = 1
+    TRACE_SENSOR_ONWAY = 1
+    TRACE_SENSOR_OUTWAY = 0
 
     # 初始化传感器
     def __init__(self, PIN):
@@ -22,7 +22,16 @@ class TraceSensor:
         GPIO.setup(PIN, GPIO.IN)
 
     # 获取状态
-    # 0 在路上
-    # 1 偏航
+    # 0 偏航
+    # 1 在路上
     def getStatus(self):
         return GPIO.input(self.PIN)
+
+
+if __name__ == "__main__":
+    try:
+        m = TraceSensor(35)
+        print(m.getStatus())
+    except KeyboardInterrupt:
+        pass
+    GPIO.cleanup()

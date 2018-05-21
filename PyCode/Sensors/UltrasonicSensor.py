@@ -47,3 +47,11 @@ class UltrasonicSensor:
         distance = pulse_duration * 340 / 2
         return round(distance, 2)
 
+
+if __name__ == "__main__":
+    try:
+        m = UltrasonicSensor(11, 13)
+        print(m.getDistance())
+    except KeyboardInterrupt:
+        pass
+    GPIO.cleanup()
