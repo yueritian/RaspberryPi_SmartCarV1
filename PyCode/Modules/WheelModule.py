@@ -58,3 +58,29 @@ class WheelModule:
         GPIO.output(self.PIN_IN2_L, GPIO.LOW)
         GPIO.output(self.PIN_IN1_R, GPIO.LOW)
         GPIO.output(self.PIN_IN2_R, GPIO.LOW)
+
+
+if __name__ == "__main__":
+    try:
+        m = WheelModule(32, 36, 40, 38)
+        m.forward()
+        time.sleep(5)
+        m.stop()
+        time.sleep(1)
+
+        m.backOff()
+        time.sleep(5)
+        m.stop()
+        time.sleep(1)
+
+        m.leftTurn()
+        time.sleep(2)
+        m.stop()
+        time.sleep(1)
+
+        m.rightTurn()
+        time.sleep(2)
+        m.stop()
+    except KeyboardInterrupt:
+        pass
+    GPIO.cleanup()
