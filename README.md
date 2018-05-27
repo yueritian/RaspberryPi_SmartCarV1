@@ -1,7 +1,19 @@
 # RaspberryPi_SmartCarV1
 基于树莓派制作智能小车（H5页面操作移动+实时显示摄像头内容+各类传感器）
 
-<img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/Car.jpeg" width="600" alt="小车初步定型照"/>
+<img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/model.jpg" width="600" alt="小车模型设计"/>
+<div style="float:left">
+<img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/car02.jpg" width="300" alt="小车照片"/>
+</div>
+<div style="float:left;">
+<img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/car01.jpg" width="300" alt="小车照片"/>
+</div>
+<div style="float:left">
+<img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/car03.jpg" width="300" alt="小车照片"/>
+</div>
+<div style="float:left">
+<img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/car04.jpg" width="300" alt="小车照片"/>
+</div>
 
 ## 软件环境
 > * 烧录系统：RASPBIAN STRETCH LITE 2018-04-18 （需要进行一系列配置，如开启SSH、摄像头、中文设置、更改源等）
