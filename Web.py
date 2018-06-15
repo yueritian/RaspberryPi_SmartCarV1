@@ -10,6 +10,7 @@ atexit.register(GPIO.cleanup)
 
 app = Flask(__name__)
 
+
 # 首页
 @app.route("/")
 def index():
@@ -71,6 +72,7 @@ def light(action):
 def reset():
     GPIO.cleanup()
     return jsonify({'success': 'ok'})
+
 
 car = QQCar.QQCar()
 
