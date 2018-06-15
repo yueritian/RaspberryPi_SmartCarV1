@@ -88,7 +88,6 @@ class QQCar:
         # LCD，此处的bus和addr请根据实际地址调整
         self.screen = Screen(bus=1, addr=0x3f, cols=16, rows=2)
         self.screen.enable_backlight()
-
         # 启动传感器
         sensorsThread = threading.Thread(target=self.start)
         sensorsThread.start()
