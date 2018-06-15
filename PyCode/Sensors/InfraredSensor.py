@@ -10,7 +10,7 @@ import time
 
 
 class InfraredSensor:
-    # 静态变量
+    # 静态变量，有障碍物/无障碍物
     INFRARED_SENSOR_BLOCK = 0
     INFRARED_SENSOR_CLEAR = 1
 
