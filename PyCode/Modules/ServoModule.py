@@ -24,13 +24,13 @@ class ServoModule:
 
     # 左转
     def turnLeft(self):
-        self.pwm.ChangeDutyCycle(2.5)
+        self.pwm.ChangeDutyCycle(12.5)
         time.sleep(0.02)
         self.pwm.ChangeDutyCycle(0)
 
     # 右转
     def turnRight(self):
-        self.pwm.ChangeDutyCycle(12.5)
+        self.pwm.ChangeDutyCycle(2.5)
         time.sleep(0.02)
         self.pwm.ChangeDutyCycle(0)
 

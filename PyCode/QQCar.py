@@ -61,6 +61,7 @@ class QQCar:
         self.LCD_SCL = 5                # 19：液晶屏
         # 小车状态
         self.status = 'normal'
+        self.code = '0'
         # 初始化树莓派gpio控制脚----------------
         # 大灯
         self.rgbLightModule = RGBLightModule(self.PIN_LIGHT_R, self.PIN_LIGHT_G, self.PIN_LIGHT_B)
@@ -86,45 +87,57 @@ class QQCar:
         self.ultrasonicSensor = UltrasonicSensor(self.PIN_ULTRASON_TRIG, self.PIN_ULTRASON_ECHO)
         # LCD，此处的bus和addr请根据实际地址调整
         self.screen = Screen(bus=1, addr=0x3f, cols=16, rows=2)
-        screen.enable_backlight()
+        self.screen.enable_backlight()
 
         # 启动传感器
-        threading.Thread(target=self.start, args=(self,))
+        sensorsThread = threading.Thread(target=self.start)
+        sensorsThread.start()
         # 启动液晶
-        threading.Thread(target=self.lcd, args=(self,))
+        lcdThread = threading.Thread(target=self.lcd)
+        lcdThread.start()
 
     # 启动传感器
     def start(self):
         while True:
             # 红外检测障碍物
-            if self.infraredSensor_L.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK or self.infraredSensor_R.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK:
-                self.status = 'warning'
-                self.beeSensor.play()
+            if self.status != 'warning':
+                if self.infraredSensor_L.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK:
+                    self.status = 'warning'
+                    self.code = 'L'
+                    self.beeSensor.play()
+            if self.status != 'warning':
+                if self.infraredSensor_R.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK:
+                    self.status = 'warning'
+                    self.code = 'R'
+                    self.beeSensor.play()
             # 超声波检测障碍物
-            if self.ultrasonicSensor.getDistance() <= 0.3:
-                self.status = 'warning'
-                self.beeSensor.play()
+            if self.status != 'warning':
+                if self.ultrasonicSensor.getDistance() <= 0.3:
+                    self.status = 'warning'
+                    self.code = 'U'
+                    self.beeSensor.play()
             # 寻迹
-            if self.traceSensor.getStatus() == TraceSensor.TRACE_SENSOR_ONWAY:
-                self.beeSensor.play(0.5)
+            #if self.traceSensor.getStatus() == TraceSensor.TRACE_SENSOR_ONWAY:
+            #    self.beeSensor.play(0.5)
             # 检测光亮
             if self.lightSensor.getStatus() == LightSensor.LIGHT_SENSOR_DARK:
                 self.rgbLightModule.turnOn()
             else:
                 self.rgbLightModule.turnOff()
-            time.sleep(1)
+            time.sleep(2)
+            self.status = 'normal'
 
     # 设置液晶屏
     def lcd(self):
         while True:
             if self.status == 'normal':
-                screen.display_data(time.strftime("%Y-%m-%d %H:%M"), 'CPU:' + self.getCPUtemperature() + 'C')
-                time.sleep(1)
+                self.screen.display_data(time.strftime("%Y-%m-%d %H:%M"), 'CPU:' + self.getCPUtemperature() + 'C')
             else:
-                screen.display_data('-----Waring-----', '   Look Out!')
-                for n in range(5):
-                    self.lcd.warning()
+                self.screen.display_data('-----Waring-----', 'Look Out! '+self.code)
+                for n in range(3):
+                    self.screen.warning()
                 self.status = 'normal'
+            time.sleep(2)
 
     # 前进的代码
     def forward(self):

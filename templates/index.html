@@ -17,37 +17,45 @@
       user-select: none;
     }
   </style>
+
 </head>
-<body style="background: #333;color:#fff;">
-  <div class="screenwarp">
-    <div class="controlwarp">
-      <div class="controlbtnup btn driveBtn"></div>
-      <div class="controlbtnright btn driveBtn"></div>
-      <div class="controlbtndown btn driveBtn"></div>
-      <div class="controlbtnleft btn driveBtn"></div>
-    </div>
-    <div class="functionwarp">
-      <div class="functiontop">
-        <div class="functiontop-left">
-          <div class="cruise-off"></div><p>寻迹</p>
+<body style="padding: 0;margin: 0;overflow: hidden;">
+  <div style="position: absolute;z-index: 99;width: 100%;height: 100%;">
+    <div class="screenwarp">
+      <div class="controlwarp">
+        <div class="controlbtnup btn driveBtn"></div>
+        <div class="controlbtnright btn driveBtn"></div>
+        <div class="controlbtndown btn driveBtn"></div>
+        <div class="controlbtnleft btn driveBtn"></div>
+      </div>
+      <div class="functionwarp">
+        <div class="functiontop">
+          <!--
+          <div class="functiontop-left">
+            <div class="cruise-off"></div><p>寻迹</p>
+          </div>
+          -->
+          <div class="functiontop-right">
+            <div class="light-off"></div><p class="light-text">开灯</p>
+          </div>
         </div>
-        <div class="functiontop-right">
-          <div class="light-off"></div><p class="light-text">开灯</p>
+        <div class="functionmiddle">
+          <div class="camera-up btnsmall"></div>
+          <div class="camera-right btnsmall"></div>
+          <div class="camera-down btnsmall"></div>
+          <div class="camera-left btnsmall"></div>
+          <div class="camera-middle"><div class="camera-on"></div></div>
+        </div>
+        <div class="functionbottom">
+          <div class="voice-left btnsmall"></div>
+          <div class="voice-right btnsmall"></div>
+          <div class="voice-middle"><div class="voice-on"></div><p class="voice-text">超声波</p></div>
         </div>
       </div>
-      <div class="functionmiddle">
-        <div class="camera-up btnsmall"></div>
-        <div class="camera-right btnsmall"></div>
-        <div class="camera-down btnsmall"></div>
-        <div class="camera-left btnsmall"></div>
-        <div class="camera-middle"><div class="camera-on"></div></div>
-      </div>
-      <div class="functionbottom">
-        <div class="voice-left btnsmall"></div>
-        <div class="voice-right btnsmall"></div>
-        <div class="voice-middle"><div class="voice-on"></div><p class="voice-text">超声波</p></div>
-      </div>
     </div>
+  </div>
+  <div>
+    <img id="streamimage" class="" src="http://192.168.1.222:8080/?action=stream">
   </div>
    <script>
 /*

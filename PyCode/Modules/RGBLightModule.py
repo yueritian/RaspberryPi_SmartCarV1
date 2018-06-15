@@ -26,12 +26,12 @@ class RGBLightModule:
         self.pwmG = GPIO.PWM(self.PIN_G, 70)
         self.pwmB = GPIO.PWM(self.PIN_B, 70)
 
+    # 开灯
+    def turnOn(self):
         self.pwmR.start(0)
         self.pwmG.start(0)
         self.pwmB.start(0)
 
-    # 开灯
-    def turnOn(self):
         self.pwmR.ChangeDutyCycle(0)
         self.pwmG.ChangeDutyCycle(100)
         self.pwmB.ChangeDutyCycle(100)

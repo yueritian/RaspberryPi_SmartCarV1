@@ -11,8 +11,8 @@ import time
 
 class InfraredSensor:
     # 静态变量
-    INFRARED_SENSOR_BLOCK = 1
-    INFRARED_SENSOR_CLEAR = 0
+    INFRARED_SENSOR_BLOCK = 0
+    INFRARED_SENSOR_CLEAR = 1
 
     # 初始化传感器
     def __init__(self, PIN):

@@ -8,6 +8,8 @@ import atexit
 atexit.register(GPIO.cleanup)
 
 
+app = Flask(__name__)
+
 # 首页
 @app.route("/")
 def index():
@@ -70,13 +72,10 @@ def reset():
     GPIO.cleanup()
     return jsonify({'success': 'ok'})
 
-
-app = Flask(__name__)
-
-car = QQCar()
+car = QQCar.QQCar()
 
 if __name__ == '__main__':
     try:
-        app.run()
+        app.run(host='0.0.0.0')
     except Exception as e:
         GPIO.cleanup()
