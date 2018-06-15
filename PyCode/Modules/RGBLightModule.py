@@ -36,7 +36,6 @@ class RGBLightModule:
         self.pwmG.ChangeDutyCycle(100)
         self.pwmB.ChangeDutyCycle(100)
 
-
     # 关灯
     def turnOff(self):
         self.pwmR.stop()
