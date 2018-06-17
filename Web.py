@@ -67,6 +67,26 @@ def light(action):
     return jsonify({'success': 'ok'})
 
 
+# 避障
+@app.route('/autocross/<action>', methods=['GET'])
+def light(action):
+    if action == 'turnOn':
+        car.turnOnAutoCross()
+    if action == 'turnOff':
+        car.turnOffAutoCross()
+    return jsonify({'success': 'ok'})
+
+
+# 寻迹
+@app.route('/cruise/<action>', methods=['GET'])
+def light(action):
+    if action == 'turnOn':
+        car.turnOnCruise()
+    if action == 'turnOff':
+        car.turnOffCruise()
+    return jsonify({'success': 'ok'})
+
+
 # 重置
 @app.route('/reset', methods=['GET'])
 def reset():

@@ -62,6 +62,8 @@ class QQCar:
         # 小车状态
         self.status = 'normal'
         self.code = '0'
+        self.autocross = 'off'
+        self.cruise = 'off'
         # 初始化树莓派gpio控制脚----------------
         # 大灯
         self.rgbLightModule = RGBLightModule(self.PIN_LIGHT_R, self.PIN_LIGHT_G, self.PIN_LIGHT_B)
@@ -98,26 +100,28 @@ class QQCar:
     # 启动传感器
     def start(self):
         while True:
-            # 红外检测障碍物
-            if self.status != 'warning':
-                if self.infraredSensor_L.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK:
-                    self.status = 'warning'
-                    self.code = 'L'
-                    self.beeSensor.play()
-            if self.status != 'warning':
-                if self.infraredSensor_R.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK:
-                    self.status = 'warning'
-                    self.code = 'R'
-                    self.beeSensor.play()
-            # 超声波检测障碍物
-            if self.status != 'warning':
-                if self.ultrasonicSensor.getDistance() <= 0.3:
-                    self.status = 'warning'
-                    self.code = 'U'
-                    self.beeSensor.play()
-            # 寻迹
-            #if self.traceSensor.getStatus() == TraceSensor.TRACE_SENSOR_ONWAY:
-            #    self.beeSensor.play(0.5)
+            if self.autocross == 'on':
+                # 红外检测障碍物
+                if self.status != 'warning':
+                    if self.infraredSensor_L.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK:
+                        self.status = 'warning'
+                        self.code = 'L'
+                        self.beeSensor.play()
+                if self.status != 'warning':
+                    if self.infraredSensor_R.getStatus() == InfraredSensor.INFRARED_SENSOR_BLOCK:
+                        self.status = 'warning'
+                        self.code = 'R'
+                        self.beeSensor.play()
+                # 超声波检测障碍物
+                if self.status != 'warning':
+                    if self.ultrasonicSensor.getDistance() <= 0.3:
+                        self.status = 'warning'
+                        self.code = 'U'
+                        self.beeSensor.play()
+            if self.cruise == 'on':
+                # 寻迹
+                if self.traceSensor.getStatus() == TraceSensor.TRACE_SENSOR_ONWAY:
+                    self.beeSensor.play(0.5)
             # 检测光亮
             if self.lightSensor.getStatus() == LightSensor.LIGHT_SENSOR_DARK:
                 self.rgbLightModule.turnOn()
@@ -189,6 +193,22 @@ class QQCar:
     # 关灯
     def turnOffLight(self):
         self.rgbLightModule.turnOff()
+
+    # 开启避障
+    def turnOnAutoCross(self):
+        self.autocross = 'on'
+
+    # 关闭避障
+    def turnOffAutoCross(self):
+        self.autocross = 'off'
+
+    # 开启寻迹
+    def turnOnCruise(self):
+        self.cruise = 'on'
+
+    # 关闭寻迹
+    def turnOffCruise(self):
+        self.cruise = 'off'
 
     # 获取cpu温度
     def getCPUtemperature(self):

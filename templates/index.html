@@ -29,13 +29,14 @@
       </div>
       <div class="functionwarp">
         <div class="functiontop">
-          <!--
           <div class="functiontop-left">
-            <div class="cruise-off"></div><p>寻迹</p>
+            <div class="autocross-off"></div><p class="autocross-text">开启</p>
           </div>
-          -->
+          <div class="functiontop-left">
+            <div class="cruise-off"></div><p class="cruise-text">开启</p>
+          </div>
           <div class="functiontop-right">
-            <div class="light-off"></div><p class="light-text">开灯</p>
+            <div class="light-off"></div><p class="light-text">开启</p>
           </div>
         </div>
         <div class="functionmiddle">
@@ -43,12 +44,12 @@
           <div class="camera-right btnsmall"></div>
           <div class="camera-down btnsmall"></div>
           <div class="camera-left btnsmall"></div>
-          <div class="camera-middle"><div class="camera-on"></div></div>
+          <div class="camera-middle"><div class="camera-on"></div><p class="voice-text">摄像头云台</p></div>
         </div>
         <div class="functionbottom">
           <div class="voice-left btnsmall"></div>
           <div class="voice-right btnsmall"></div>
-          <div class="voice-middle"><div class="voice-on"></div><p class="voice-text">超声波</p></div>
+          <div class="voice-middle"><div class="voice-on"></div><p class="voice-text">超声波云台</p></div>
         </div>
       </div>
     </div>
@@ -56,24 +57,8 @@
   <div>
     <img id="streamimage" class="" src="http://192.168.1.222:8080/?action=stream">
   </div>
-   <script>
-/*
-
-    $(".cruise-off").click(function(){
-      $(".cruise-off").toggleClass("cruise-on");
-    });
-
-    $(".camera-off").click(function(){
-      $(".camera-off").toggleClass("camera-on");
-    });
-    $(".voice-off").click(function(){
-      $(".voice-off").toggleClass("voice-on");
-    });*/
-
-
-
+  <script>
     $(document).ready(function(){
-
         resize();
         window.addEventListener("resize", resize)
         // 点击添加波纹
@@ -132,6 +117,26 @@
             $(".light-off").removeClass("light-on");
             $(".light-text").html("开灯");
             action('light/turnOff');
+        });
+        // 寻迹
+        $(".cruise-off").toggle(function(){
+            $(".cruise-off").addClass("cruise-on");
+            $(".cruise-text").html("开启");
+            action('cruise/turnOn');
+        },function(){
+            $(".cruise-off").removeClass("cruise-on");
+            $(".cruise-text").html("关闭");
+            action('cruise/turnOff');
+        });
+        // 避障
+        $(".autocross-off").toggle(function(){
+            $(".autocross-off").addClass("autocross-on");
+            $(".autocross-text").html("开启");
+            action('autocross/turnOn');
+        },function(){
+            $(".autocross-off").removeClass("autocross-on");
+            $(".autocross-text").html("关闭");
+            action('autocross/turnOff');
         });
     });
 
