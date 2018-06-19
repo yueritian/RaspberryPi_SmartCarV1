@@ -111,11 +111,11 @@
         // 灯
         $(".light-off").toggle(function(){
             $(".light-off").addClass("light-on");
-            $(".light-text").html("关灯");
+            $(".light-text").html("关闭");
             action('light/turnOn');
         },function(){
             $(".light-off").removeClass("light-on");
-            $(".light-text").html("开灯");
+            $(".light-text").html("开启");
             action('light/turnOff');
         });
         // 寻迹
