@@ -14,8 +14,8 @@
     /*左侧按钮区*/
     .controlwarp{
       position: absolute;
-      left:10px;
-      bottom: 10px;
+      left:20px;
+      bottom: 20px;
       width: 120px;
       height: 120px;
     }
@@ -116,7 +116,7 @@
       letter-spacing: 2px
     }
     .functiontop{
-      width: 120px;
+      width: 180px;
       text-align:center;
       height: 60px;
       float: right;
@@ -125,6 +125,16 @@
       display: inline-block;
       width: 36px;
       margin:0 7px;
+    }
+    .functiontop span{
+      font-size: 10px;
+      color: #eee;
+      line-height: 8px;
+    }
+    .functiontop .text{
+      font-size: 10px;
+      color: #eee;
+      line-height: 2px;
     }
     /*巡航*/
     .cruise-off {
@@ -206,20 +216,58 @@
         background-size: cover;
       }
     }
+    /*避障*/
+    .autocross-off {
+      height:36px;
+      width: 36px;
+      background-image: url('../images/autocross-off@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .autocross-off {
+        background-image: url('../images/autocross-off@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .autocross-off {
+        background-image: url('../images/autocross-off@3x.png');
+        background-size: cover;
+      }
+    }
+    .autocross-on {
+      height:36px;
+      width: 36px;
+      background-image: url('../images/autocross-on@2x.png');
+    }
+
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .autocross-on {
+        background-image: url('../images/autocross-on@2x.png');
+        background-size: cover;
+      }
+    }
+    @media all and (-webkit-min-device-pixel-ratio: 2) {
+      .autocross-on {
+        background-image: url('../images/autocross-on@3x.png');
+        background-size: cover;
+      }
+    }
     /*中间摄像头*/
     .functionmiddle{
       width: 140px;
       text-align:center;
       position: relative;
-      height: 150px;
-      margin-top: 80px
+      height: 140px;
+      margin-top: 80px;
+      margin-left: 22px;
     }
 
     .camera-middle{
       display: inline-block;
       position: absolute;
       left: 40px;
-      top: 35px;
+      top: 30px;
     }
     .camera-text{
       line-height: 20px;
@@ -288,7 +336,7 @@
     .camera-right {
       position: absolute;
       left: 110px;
-      top: 50px;
+      top: 48px;
       height:30px;
       width: 30px;
       background-image: url('../images/sright@2x.png');
@@ -310,7 +358,7 @@
     .camera-down {
       position: absolute;
       left: 55px;
-      top: 100px;
+      top: 90px;
       height:30px;
       width: 30px;
       background-image: url('../images/sdown@2x.png');
@@ -331,7 +379,7 @@
 
     .camera-left {
       position: absolute;
-      top: 50px;
+      top: 48px;
       height:30px;
       width: 30px;
       background-image: url('../images/sleft@2x.png');
@@ -349,21 +397,38 @@
         background-size: cover;
       }
     }
+    .voice-texts{
+      padding:0;
+      font-size: 10px;
+      color: #f8f8f8;
+      line-height: 10px;
+      top: 124px;
+      left: 40px;
+      position:  absolute;
+    }
     /*下方超声波*/
     .functionbottom{
       width: 140px;
       text-align:center;
       height: 80px;
       position: absolute;
-      bottom: 0;
+      bottom: 10px;
+      margin-left: 22px;
     }
     .voice-middle{
       display: inline-block;
       position: absolute;
       left: 40px;
+      top: 20px;
     }
-    .voice-text{
+    .voice-textv{
       padding:0;
+      font-size: 10px;
+      color: #f8f8f8;
+      line-height: 10px;
+      top: 82px;
+      left: 40px;
+      position:  absolute;
     }
     .voice-off {
       height:60px;
@@ -404,7 +469,7 @@
     .voice-left {
       background-image: url('../images/sleft@2x.png');
       position: absolute;
-      top: 15px;
+      top: 35px;
       height:30px;
       width: 30px;
     }
@@ -425,7 +490,7 @@
       background-image: url('../images/sright@2x.png');
       position: absolute;
       left: 110px;
-      top: 15px;
+      top: 35px;
       height:30px;
       width: 30px;
     }
