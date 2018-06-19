@@ -69,7 +69,7 @@ def light(action):
 
 # 避障
 @app.route('/autocross/<action>', methods=['GET'])
-def light(action):
+def autocross(action):
     if action == 'turnOn':
         car.turnOnAutoCross()
     if action == 'turnOff':
@@ -79,7 +79,7 @@ def light(action):
 
 # 寻迹
 @app.route('/cruise/<action>', methods=['GET'])
-def light(action):
+def cruise(action):
     if action == 'turnOn':
         car.turnOnCruise()
     if action == 'turnOff':
