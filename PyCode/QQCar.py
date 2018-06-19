@@ -62,8 +62,10 @@ class QQCar:
         # 小车状态
         self.status = 'normal'
         self.code = '0'
+        # web页面的按钮状态
         self.autocross = 'off'
         self.cruise = 'off'
+        self.light = 'off'
         # 初始化树莓派gpio控制脚----------------
         # 大灯
         self.rgbLightModule = RGBLightModule(self.PIN_LIGHT_R, self.PIN_LIGHT_G, self.PIN_LIGHT_B)
@@ -122,11 +124,12 @@ class QQCar:
                 # 寻迹
                 if self.traceSensor.getStatus() == TraceSensor.TRACE_SENSOR_ONWAY:
                     self.beeSensor.play(0.5)
-            # 检测光亮
-            if self.lightSensor.getStatus() == LightSensor.LIGHT_SENSOR_DARK:
-                self.rgbLightModule.turnOn()
-            else:
-                self.rgbLightModule.turnOff()
+            if self.light == 'off':
+                # 检测光亮
+                if self.lightSensor.getStatus() == LightSensor.LIGHT_SENSOR_DARK:
+                    self.rgbLightModule.turnOn()
+                else:
+                    self.rgbLightModule.turnOff()
             time.sleep(2)
             self.status = 'normal'
 
@@ -136,9 +139,8 @@ class QQCar:
             if self.status == 'normal':
                 self.screen.display_data(time.strftime("%Y-%m-%d %H:%M"), 'CPU:' + self.getCPUtemperature() + 'C')
             else:
-                self.screen.display_data('-----Waring-----', 'Look Out! '+self.code)
                 for n in range(3):
-                    self.screen.warning()
+                    self.screen.warning('-----Waring-----', 'Look Out! '+self.code)
                 self.status = 'normal'
             time.sleep(2)
 
@@ -188,10 +190,12 @@ class QQCar:
 
     # 开灯
     def turnOnLight(self):
+        self.light = 'on'
         self.rgbLightModule.turnOn()
 
     # 关灯
     def turnOffLight(self):
+        self.light = 'off'
         self.rgbLightModule.turnOff()
 
     # 开启避障
