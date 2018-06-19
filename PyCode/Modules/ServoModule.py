@@ -20,19 +20,25 @@ class ServoModule:
 
         self.pwm = GPIO.PWM(self.PIN, 50)
         self.pwm.start(0)
-        self.pwm.ChangeDutyCycle(6.5)
+        self.pwm.ChangeDutyCycle(5.5)
+        time.sleep(0.2)
+        self.pwm.stop()
 
     # 舵机左转
     def turnLeft(self):
+        self.pwm.start(0)
         self.pwm.ChangeDutyCycle(12.5)
         time.sleep(0.02)
         self.pwm.ChangeDutyCycle(0)
+        self.pwm.stop()
 
     # 舵机右转
     def turnRight(self):
+        self.pwm.start(0)
         self.pwm.ChangeDutyCycle(2.5)
         time.sleep(0.02)
         self.pwm.ChangeDutyCycle(0)
+        self.pwm.stop()
 
 
 if __name__ == "__main__":

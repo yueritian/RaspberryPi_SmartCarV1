@@ -39,12 +39,13 @@ class Screen():
     def disable_backlight(self):
         self.data_mask = self.data_mask & ~self.backlight_mask
 
-    def warning(self):
-
-            self.disable_backlight()
-            sleep(1)
-            self.enable_backlight()
-            sleep(1)
+    def warning(self, line1, line2):
+        self.disable_backlight()
+        self.display_data(line1, line2)
+        sleep(1)
+        self.enable_backlight()
+        self.display_data(line1, line2)
+        sleep(1)
 
     def display_data(self, *args):
         self.clear()
