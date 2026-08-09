@@ -10,9 +10,7 @@ import time
 
 
 class UltrasonicSensor:
-    # 静态变量
-    LIGHT_SENSOR_LIGHT = 0
-    LIGHT_SENSOR_DARK = 1
+    ECHO_TIMEOUT_SECONDS = 0.05
 
     # 初始化传感器
     def __init__(self, PIN_TRIG, PIN_ECHO):
@@ -33,14 +31,17 @@ class UltrasonicSensor:
         GPIO.output(self.PIN_TRIG, GPIO.LOW)
 
         # 等待低电平结束，然后记录时间。
+        wait_started = time.monotonic()
         while GPIO.input(self.PIN_ECHO) == 0:
-            pass
-        pulse_start = time.time()
+            if time.monotonic() - wait_started > self.ECHO_TIMEOUT_SECONDS:
+                return None
+        pulse_start = time.monotonic()
 
         # 等待高电平结束，然后记录时间。
         while GPIO.input(self.PIN_ECHO) == 1:
-            pass
-        pulse_end = time.time()
+            if time.monotonic() - pulse_start > self.ECHO_TIMEOUT_SECONDS:
+                return None
+        pulse_end = time.monotonic()
 
         pulse_duration = pulse_end - pulse_start
         # distance = pulse_duration * 17150

@@ -1,4 +1,7 @@
 # RaspberryPi_SmartCarV1
+
+[中文](README.md) | [English](README.en.md)
+
 基于树莓派制作智能小车（H5页面操作移动+实时显示摄像头内容+各类传感器）
 
 <img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/model.jpg" width="600" alt="小车模型设计"/>
@@ -8,6 +11,33 @@
 <img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/car04.jpg" width="600" alt="小车照片"/>
 <img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/car06.jpg" width="600" alt="小车照片"/>
 <img src="https://github.com/yueritian/RaspberryPi_SmartCarV1/blob/master/DocImages/car07.jpg" width="600" alt="小车照片"/>
+
+## 快速开始
+
+> 这是一个 2018 年的树莓派 3 项目。使用现代 Raspberry Pi OS 时，mjpg-streamer 的安装路径和启动参数可能需要调整。
+
+```bash
+git clone https://github.com/yueritian/RaspberryPi_SmartCarV1.git
+cd RaspberryPi_SmartCarV1
+python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install -r requirements.txt
+python3 Web.py
+```
+
+默认 Web 地址为 `http://<树莓派IP>:5000`，摄像头流地址为 `http://<树莓派IP>:8080/?action=stream`。可以用环境变量覆盖：
+
+```bash
+export HOST=0.0.0.0
+export PORT=5000
+export CAMERA_STREAM_URL='http://192.168.1.10:8080/?action=stream'
+python3 Web.py
+```
+
+Web 界面支持中英文：会根据浏览器语言自动选择，也可通过左上角切换，或使用 `/?lang=zh` 和 `/?lang=en`。
+
+> [!WARNING]
+> 当前 Web 控制接口没有身份认证。请只在可信的局域网中使用，不要直接暴露到公网。
 
 ## 软件环境
 > * 烧录系统：RASPBIAN STRETCH LITE 2018-04-18 （需要进行一系列配置，如开启SSH、摄像头、中文设置、更改源等）

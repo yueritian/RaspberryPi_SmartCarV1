@@ -24,16 +24,17 @@
 
 import threading
 import os
+import time
 
-from PyCode.Modules.RGBLightModule import *
-from PyCode.Modules.ServoModule import *
-from PyCode.Modules.WheelModule import *
-from PyCode.Modules.LCDModule import *
-from PyCode.Sensors.BeeSensor import *
-from PyCode.Sensors.InfraredSensor import *
-from PyCode.Sensors.LightSensor import *
-from PyCode.Sensors.TraceSensor import *
-from PyCode.Sensors.UltrasonicSensor import *
+from PyCode.Modules.RGBLightModule import RGBLightModule
+from PyCode.Modules.ServoModule import ServoModule
+from PyCode.Modules.WheelModule import WheelModule
+from PyCode.Modules.LCDModule import Screen
+from PyCode.Sensors.BeeSensor import BeeSensor
+from PyCode.Sensors.InfraredSensor import InfraredSensor
+from PyCode.Sensors.LightSensor import LightSensor
+from PyCode.Sensors.TraceSensor import TraceSensor
+from PyCode.Sensors.UltrasonicSensor import UltrasonicSensor
 
 
 class QQCar:
@@ -93,10 +94,10 @@ class QQCar:
         self.screen = Screen(bus=1, addr=0x3f, cols=16, rows=2)
         self.screen.enable_backlight()
         # 启动传感器
-        sensorsThread = threading.Thread(target=self.start)
+        sensorsThread = threading.Thread(target=self.start, daemon=True)
         sensorsThread.start()
         # 启动液晶
-        lcdThread = threading.Thread(target=self.lcd)
+        lcdThread = threading.Thread(target=self.lcd, daemon=True)
         lcdThread.start()
 
     # 启动传感器
@@ -116,7 +117,8 @@ class QQCar:
                         self.beeSensor.play()
                 # 超声波检测障碍物
                 if self.status != 'warning':
-                    if self.ultrasonicSensor.getDistance() <= 0.3:
+                    distance = self.ultrasonicSensor.getDistance()
+                    if distance is not None and distance <= 0.3:
                         self.status = 'warning'
                         self.code = 'U'
                         self.beeSensor.play()
@@ -140,7 +142,7 @@ class QQCar:
                 self.screen.display_data(time.strftime("%Y-%m-%d %H:%M"), 'CPU:' + self.getCPUtemperature() + 'C')
             else:
                 for n in range(3):
-                    self.screen.warning('-----Waring-----', 'Look Out! '+self.code)
+                    self.screen.warning('----Warning-----', 'Look Out! ' + self.code)
                 self.status = 'normal'
             time.sleep(2)
 

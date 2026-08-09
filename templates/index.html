@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="{{ language }}">
 <head>
   <meta charset="UTF-8">
-  <title>Demo</title>
+  <title>{{ translations.app_title }}</title>
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="static/css/resetcss.css">
-  <link rel="stylesheet" type="text/css" href="static/css/play.css">
-  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resetcss.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/play.css') }}">
   <style>
     .driveBtn {
       -webkit-touch-callout: none;
@@ -20,137 +19,140 @@
 </head>
 <body style="padding: 0;margin: 0;overflow: hidden;">
   <div style="position: absolute;z-index: 99;width: 100%;height: 100%;">
+    <a class="language-switch" href="{{ url_for('index', lang=next_language) }}">{{ translations.switch_language }}</a>
     <div class="screenwarp">
       <div class="controlwarp">
-        <div class="controlbtnup btn driveBtn"></div>
-        <div class="controlbtnright btn driveBtn"></div>
-        <div class="controlbtndown btn driveBtn"></div>
-        <div class="controlbtnleft btn driveBtn"></div>
+        <div class="controlbtnup btn driveBtn" role="button" tabindex="0" aria-label="{{ translations.move_forward }}" data-action="drive/forward"></div>
+        <div class="controlbtnright btn driveBtn" role="button" tabindex="0" aria-label="{{ translations.turn_right }}" data-action="drive/rightTurn"></div>
+        <div class="controlbtndown btn driveBtn" role="button" tabindex="0" aria-label="{{ translations.move_backward }}" data-action="drive/backOff"></div>
+        <div class="controlbtnleft btn driveBtn" role="button" tabindex="0" aria-label="{{ translations.turn_left }}" data-action="drive/leftTurn"></div>
       </div>
       <div class="functionwarp">
         <div class="functiontop">
           <div class="functiontop-left">
-            <div class="autocross-off"></div><span>避障</span><p class="autocross-text text">开启</p>
+            <div class="autocross-off feature-toggle" role="button" tabindex="0" aria-pressed="false" aria-label="{{ translations.obstacle_avoidance }}" data-feature="autocross"></div><span>{{ translations.obstacle_avoidance }}</span><p class="autocross-text text">{{ translations.turn_on }}</p>
           </div>
           <div class="functiontop-left">
-            <div class="cruise-off"></div><span>寻迹</span><p class="cruise-text text">开启</p>
+            <div class="cruise-off feature-toggle" role="button" tabindex="0" aria-pressed="false" aria-label="{{ translations.line_tracking }}" data-feature="cruise"></div><span>{{ translations.line_tracking }}</span><p class="cruise-text text">{{ translations.turn_on }}</p>
           </div>
           <div class="functiontop-right">
-            <div class="light-off"></div><span>照明</span><p class="light-text text">开启</p>
+            <div class="light-off feature-toggle" role="button" tabindex="0" aria-pressed="false" aria-label="{{ translations.lighting }}" data-feature="light"></div><span>{{ translations.lighting }}</span><p class="light-text text">{{ translations.turn_on }}</p>
           </div>
         </div>
         <div class="functionmiddle">
-          <div class="camera-up btnsmall"></div>
-          <div class="camera-right btnsmall"></div>
-          <div class="camera-down btnsmall"></div>
-          <div class="camera-left btnsmall"></div>
+          <div class="camera-up btnsmall" role="button" tabindex="0" aria-label="{{ translations.camera_up }}" data-action="servoCamera/upTurn"></div>
+          <div class="camera-right btnsmall" role="button" tabindex="0" aria-label="{{ translations.camera_right }}" data-action="servoCamera/rightTurn"></div>
+          <div class="camera-down btnsmall" role="button" tabindex="0" aria-label="{{ translations.camera_down }}" data-action="servoCamera/downTurn"></div>
+          <div class="camera-left btnsmall" role="button" tabindex="0" aria-label="{{ translations.camera_left }}" data-action="servoCamera/leftTurn"></div>
           <div class="camera-middle"><div class="camera-on"></div></div>
-          <p class="voice-texts">摄像头云台</p>
+          <p class="voice-texts">{{ translations.camera_gimbal }}</p>
         </div>
         <div class="functionbottom">
-          <div class="voice-left btnsmall"></div>
-          <div class="voice-right btnsmall"></div>
+          <div class="voice-left btnsmall" role="button" tabindex="0" aria-label="{{ translations.ultrasonic_left }}" data-action="servoUltrasonic/leftTurn"></div>
+          <div class="voice-right btnsmall" role="button" tabindex="0" aria-label="{{ translations.ultrasonic_right }}" data-action="servoUltrasonic/rightTurn"></div>
           <div class="voice-middle"><div class="voice-on"></div></div>
-          <p class="voice-textv">超声波云台</p>
+          <p class="voice-textv">{{ translations.ultrasonic_gimbal }}</p>
         </div>
       </div>
     </div>
   </div>
   <div>
-    <img id="streamimage" class="" src="http://192.168.0.214:8080/?action=stream" width="100%" height="100%">
+    <img id="streamimage" src="{{ camera_stream_url }}" width="100%" height="100%" alt="">
   </div>
   <script>
-    $(document).ready(function(){
-        resize();
-        window.addEventListener("resize", resize)
-        // 点击添加波纹
-        var wave = '<div class="wave-circle"></div>';
-        $('.btn').click(function (){
-            $(this).siblings('.btn').empty();
-            $(this).empty().append(wave);
+    const i18n = {{ translations|tojson }};
+
+    document.addEventListener('DOMContentLoaded', function () {
+      resize();
+      window.addEventListener('resize', resize);
+
+      document.querySelectorAll('.driveBtn').forEach(function (button) {
+        let driving = false;
+
+        function startDriving(event) {
+          event.preventDefault();
+          if (driving) return;
+          driving = true;
+          addRipple(button, 'wave-circle');
+          action(button.dataset.action).catch(function () {});
+        }
+
+        function stopDriving(event) {
+          if (!driving) return;
+          event.preventDefault();
+          driving = false;
+          action('drive/stop').catch(function () {});
+        }
+
+        button.addEventListener('pointerdown', startDriving);
+        button.addEventListener('pointerup', stopDriving);
+        button.addEventListener('pointercancel', stopDriving);
+        button.addEventListener('pointerleave', stopDriving);
+        button.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') startDriving(event);
         });
-        var wavesmall = '<div class="wave-circlesmall"></div>';
-        $('.btnsmall').click(function (){
-            $(this).siblings('.btnsmall').empty();
-            $(this).empty().append(wavesmall);
+        button.addEventListener('keyup', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') stopDriving(event);
         });
-        // 驾驶
-        $('.controlbtnup').on('touchstart', function(){
-            action('drive/forward');
+      });
+
+      document.querySelectorAll('.btnsmall').forEach(function (button) {
+        function trigger(event) {
+          event.preventDefault();
+          addRipple(button, 'wave-circlesmall');
+          action(button.dataset.action).catch(function () {});
+        }
+
+        button.addEventListener('click', trigger);
+        button.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') trigger(event);
         });
-        $('.controlbtndown').on('touchstart', function(){
-            action('drive/backOff');
+      });
+
+      document.querySelectorAll('.feature-toggle').forEach(function (button) {
+        button.dataset.enabled = 'false';
+
+        function toggle(event) {
+          event.preventDefault();
+          const enabled = button.dataset.enabled !== 'true';
+          updateFeature(button, enabled);
+          action(button.dataset.feature + '/' + (enabled ? 'turnOn' : 'turnOff'))
+            .catch(function () { updateFeature(button, !enabled); });
+        }
+
+        button.addEventListener('click', toggle);
+        button.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') toggle(event);
         });
-        $('.controlbtnleft').on('touchstart', function(){
-            action('drive/leftTurn');
-        });
-        $('.controlbtnright').on('touchstart', function(){
-            action('drive/rightTurn');
-        });
-        $('.driveBtn').on('touchend', function(){
-            action('drive/stop');
-        });
-        // 超声波云台
-        $('.voice-left').click(function(){
-            action('servoUltrasonic/leftTurn');
-        });
-        $('.voice-right').click(function(){
-            action('servoUltrasonic/rightTurn');
-        });
-        // 摄像头云台
-        $('.camera-up').click(function(){
-            action('servoCamera/upTurn');
-        });
-        $('.camera-down').click(function(){
-            action('servoCamera/downTurn');
-        });
-        $('.camera-left').click(function(){
-            action('servoCamera/leftTurn');
-        });
-        $('.camera-right').click(function(){
-            action('servoCamera/rightTurn');
-        });
-        // 灯
-        $(".light-off").toggle(function(){
-            $(".light-off").addClass("light-on");
-            $(".light-text").html("关闭");
-            action('light/turnOn');
-        },function(){
-            $(".light-off").removeClass("light-on");
-            $(".light-text").html("开启");
-            action('light/turnOff');
-        });
-        // 寻迹
-        $(".cruise-off").toggle(function(){
-            $(".cruise-off").addClass("cruise-on");
-            $(".cruise-text").html("开启");
-            action('cruise/turnOn');
-        },function(){
-            $(".cruise-off").removeClass("cruise-on");
-            $(".cruise-text").html("关闭");
-            action('cruise/turnOff');
-        });
-        // 避障
-        $(".autocross-off").toggle(function(){
-            $(".autocross-off").addClass("autocross-on");
-            $(".autocross-text").html("开启");
-            action('autocross/turnOn');
-        },function(){
-            $(".autocross-off").removeClass("autocross-on");
-            $(".autocross-text").html("关闭");
-            action('autocross/turnOff');
-        });
+      });
     });
 
-    function action(url){
-        $.ajax({
-            type: 'get',
-            url: url,
-            //data: {type:'turnOn'},
-            success: function (data) {
-                console.log(data.success);
-            }
+    function addRipple(button, className) {
+      const parent = button.parentElement;
+      parent.querySelectorAll('.' + className).forEach(function (wave) { wave.remove(); });
+      const wave = document.createElement('div');
+      wave.className = className;
+      button.replaceChildren(wave);
+    }
+
+    function updateFeature(button, enabled) {
+      const feature = button.dataset.feature;
+      button.dataset.enabled = String(enabled);
+      button.setAttribute('aria-pressed', String(enabled));
+      button.classList.toggle(feature + '-on', enabled);
+      document.querySelector('.' + feature + '-text').textContent = enabled ? i18n.turn_off : i18n.turn_on;
+    }
+
+    function action(path) {
+      return fetch('/' + path, { method: 'GET', cache: 'no-store', credentials: 'same-origin' })
+        .then(function (response) {
+          if (!response.ok) throw new Error(i18n.request_failed + ': ' + response.status);
+          return response.json();
         })
+        .catch(function (error) {
+          console.error(error);
+          throw error;
+        });
     }
 
     function resize() {

@@ -11,6 +11,28 @@
       height: 100%;
       position: relative;
     }
+    .language-switch {
+      position: absolute;
+      z-index: 100;
+      top: 10px;
+      left: 12px;
+      padding: 4px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 4px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.35);
+      font: 12px/18px sans-serif;
+      text-decoration: none;
+    }
+    [role="button"] {
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    [role="button"]:focus-visible,
+    .language-switch:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
     /*左侧按钮区*/
     .controlwarp{
       position: absolute;
@@ -163,13 +185,13 @@
     }
 
     @media all and (-webkit-min-device-pixel-ratio: 1.5) {
-      .cruise {
+      .cruise-on {
         background-image: url('../images/cruise-on@2x.png');
         background-size: cover;
       }
     }
     @media all and (-webkit-min-device-pixel-ratio: 2) {
-      .cruise {
+      .cruise-on {
         background-image: url('../images/cruise-on@3x.png');
         background-size: cover;
       }
